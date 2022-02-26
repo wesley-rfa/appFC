@@ -3,6 +3,8 @@ import { StatusBar } from 'react-native';
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { Container, ForgotArea, ForgotTitle, ForgotText, UserName, UserBirthDate, UserCPF } from './styles';
 
 interface userRecoverPassWord {
@@ -14,12 +16,15 @@ export default function ForgotPassword() {
   const [userName, setUserName] = useState('');
   const [userCPF, setuserCPF] = useState('');
 
+  const navigation = useNavigation<any>();
+
   function handleRecoverPassword() {
     let objForgotPassword: userRecoverPassWord = {
       userName,
       userCPF
     }
     console.log(objForgotPassword)
+    navigation.navigate('ChangePassword')
   }
 
   return (
