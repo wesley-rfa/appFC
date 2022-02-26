@@ -2,6 +2,7 @@ import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import FcLogo from '../../assets/logoFerreiraCosta.svg';
+import PrimaryButton from '../../components/PrimaryButton';
 
 import {
   Container, LogoArea,
@@ -28,9 +29,7 @@ export default function Login() {
         <UserName placeholder="Usuário"></UserName>
         <UserPassword placeholder="Senha"></UserPassword>
         <ForgotPassword onPress={handleForgotPassword}>Esqueci minha senha</ForgotPassword>
-        <SignInButton>
-          <SendText>Entrar</SendText>
-        </SignInButton>
+        <PrimaryButton text="Entrar" />
       </SignInArea>
 
     </Container>
