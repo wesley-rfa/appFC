@@ -1,0 +1,12 @@
+{
+  "name": "appFC",
+  "displayName": "appFC",
+  "expo": {
+    "name": "appFC",
+    "slug": "appFC",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
