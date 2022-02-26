@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, ActivityIndicator } from 'react-native';
+
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
 
 import { useNavigation } from '@react-navigation/native';
 import { api } from '../../services/api';
+import { useTheme } from 'styled-components';
 
-import { Container, ForgotArea, ForgotTitle, ForgotText, UserName, UserBirthDate, UserCPF } from './styles';
+import {
+  Container, ForgotArea,
+  ForgotTitle, ForgotText,
+  UserName, UserBirthDate,
+  UserCPF, LoadContainer
+} from './styles';
 
 interface userRecoverPassWord {
   userName: string,
@@ -15,13 +22,16 @@ interface userRecoverPassWord {
 }
 
 export default function ForgotPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const [userName, setUserName] = useState('');
-  const [userCPF, setuserCPF] = useState('');
+  const [userCPF, setUserCPF] = useState('');
   const [userDateBirth, setUserDateBirth] = useState('');
 
   const navigation = useNavigation<any>();
+  const theme = useTheme()
 
   async function handleRecoverPassword() {
+    setIsLoading(true)
     let objForgotPassword: userRecoverPassWord = {
       userName,
       userCPF,
@@ -33,11 +43,12 @@ export default function ForgotPassword() {
       objForgotPassword
     })
       .then(function (response) {
-        //console.log(objForgotPassword)
+        setIsLoading(false)
         console.log(response.data)
-        //navigation.navigate('ChangePassword', { userId: 1, userName: 'teste' })
+        navigation.navigate('ChangePassword', { userId: response.data.id, userName: response.data.nome })
       })
       .catch(function (error) {
+        setIsLoading(false)
         console.log(error);
       });
 
@@ -47,15 +58,22 @@ export default function ForgotPassword() {
   return (
     <Container>
       <StatusBar barStyle="light-content" />
-      <HeaderScreen text="Recuperar Senha" />
-      <ForgotArea>
-        <ForgotTitle>Esqueceu sua Senha?</ForgotTitle>
-        <ForgotText>Preencha os campos abaixo que iremos te ajudar :)</ForgotText>
-        <UserName placeholder="Usuário" onChangeText={setUserName}></UserName>
-        <UserBirthDate placeholder="Data de Nascimento" onChangeText={setUserDateBirth}></UserBirthDate>
-        <UserCPF placeholder="CPF" onChangeText={setuserCPF}></UserCPF>
-        <PrimaryButton text="Recuperar" onPress={handleRecoverPassword} />
-      </ForgotArea>
+      {isLoading ?
+        <LoadContainer>
+          <ActivityIndicator color={theme.colors.primary} size="large" />
+        </LoadContainer> :
+        <>
+          <HeaderScreen text="Recuperar Senha" />
+          <ForgotArea>
+            <ForgotTitle>Esqueceu sua Senha?</ForgotTitle>
+            <ForgotText>Preencha os campos abaixo que iremos te ajudar :)</ForgotText>
+            <UserName placeholder="Usuário" onChangeText={setUserName}></UserName>
+            <UserBirthDate placeholder="Data de Nascimento" onChangeText={setUserDateBirth}></UserBirthDate>
+            <UserCPF placeholder="CPF" onChangeText={setUserCPF}></UserCPF>
+            <PrimaryButton text="Recuperar" onPress={handleRecoverPassword} />
+          </ForgotArea>
+        </>
+      }
     </Container>
   )
 }
