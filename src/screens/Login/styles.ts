@@ -56,12 +56,14 @@ export const UserPassword = styled.TextInput`
     margin-bottom: ${RFValue(12)}px;
 `;
 
-export const ForgotPassword = styled.Text`
-    font-family: ${({ theme }) => theme.fonts.regular};
+export const ForgotPassword = styled.View`
+    align-items: flex-end;
+`;
+export const ForgotText = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.primary};
-    text-align: right;
-`;
+`
 
 export const SignInButton = styled.TouchableOpacity`
   border-radius: 5px;

@@ -11,7 +11,8 @@ import {
   Container, LogoArea,
   SignInArea, TitleLogin,
   TextInfo, UserName,
-  UserPassword, ForgotPassword
+  UserPassword, ForgotPassword,
+  ForgotText
 } from './styles';
 
 export default function Login() {
@@ -33,7 +34,9 @@ export default function Login() {
         <TextInfo>Informe suas credenciais para acessar a plataforma.</TextInfo>
         <UserName placeholder="Usuário"></UserName>
         <UserPassword placeholder="Senha"></UserPassword>
-        <ForgotPassword onPress={handleForgotPassword}>Esqueci minha senha</ForgotPassword>
+        <ForgotPassword>
+          <ForgotText onPress={handleForgotPassword}>Esqueci minha senha</ForgotText>
+        </ForgotPassword>
         <PrimaryButton text="Entrar" />
       </SignInArea>
 
