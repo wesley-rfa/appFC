@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import {
   Container, Header,
-  UserInfo, UserGreetting,
+  UserInfo, UserGreeting,
   UserName, IconLogout,
   UserWrapper
 } from './styles';
@@ -13,7 +13,7 @@ import { useAuth } from '../../hooks/auth';
 
 export default function Home() {
   const navigation = useNavigation<any>();
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
 
   return (
     <Container>
@@ -21,10 +21,10 @@ export default function Home() {
       <Header>
         <UserWrapper>
           <UserInfo>
-            <UserGreetting>Olá,</UserGreetting>
+            <UserGreeting>Olá,</UserGreeting>
             <UserName>{user.userName}</UserName>
           </UserInfo>
-          <IconLogout name="power" />
+          <IconLogout name="power" onPress={signOut} />
         </UserWrapper>
       </Header>
     </Container>

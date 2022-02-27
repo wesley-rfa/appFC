@@ -15,6 +15,7 @@ interface User {
 interface AuthContextData {
   user: User;
   signIn(userName: string, password: string): Promise<void>;
+  signOut(): Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -47,6 +48,11 @@ function AuthProvider({ children }: AuthProviderProps) {
       });
   }
 
+  async function signOut() {
+    setUser({} as User);
+    AsyncStorage.removeItem(userStorageKey)
+  }
+
   useEffect(() => {
     async function loadUserStorageDate() {
       const userStorage = await AsyncStorage.getItem(userStorageKey);
@@ -59,7 +65,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, signIn }}>
+    <AuthContext.Provider value={{ user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )

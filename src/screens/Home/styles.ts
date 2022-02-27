@@ -26,7 +26,7 @@ export const UserWrapper = styled.View`
 export const UserInfo = styled.View`
 `;
 
-export const UserGreetting = styled.Text`
+export const UserGreeting = styled.Text`
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.shape};
