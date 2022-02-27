@@ -17,6 +17,8 @@ import { useAuth } from '../../hooks/auth';
 import UserCard, { UserCardProps } from '../../components/UserCard';
 import { api } from '../../services/api';
 import { useTheme } from 'styled-components';
+import { maskCPF, maskPhoneNumber } from '../../utils/mask';
+import PrimaryButton from '../../components/PrimaryButton';
 
 
 export default function Home() {
@@ -28,6 +30,7 @@ export default function Home() {
   const { user, signOut } = useAuth()
 
   async function loadUsers() {
+    setIsLoading(true)
     api.post('', {
       getUsersList: true,
     })
@@ -36,7 +39,13 @@ export default function Home() {
         if (!response.data) {
 
         } else {
-          setUsers(response.data)
+          const usersFormatted: UserCardProps[] = response.data
+            .map((user: UserCardProps) => {
+              user.cpf = maskCPF(user.cpf)
+              user.phoneNumber = maskPhoneNumber(user.phoneNumber)
+              return user
+            })
+          setUsers(usersFormatted)
         }
       })
       .catch(function (error) {
@@ -52,6 +61,10 @@ export default function Home() {
 
   function handleFilter() {
     console.log('filtro')
+  }
+
+  function handleCancellAllUsers() {
+    console.log('exclui todos')
   }
 
   return (
@@ -89,6 +102,7 @@ export default function Home() {
               renderItem={({ item }) => <UserCard data={item} />}
             />
 
+            <PrimaryButton text="Excluir Todos" onPress={handleCancellAllUsers} />
           </Body>
         </>
       }
