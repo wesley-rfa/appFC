@@ -12,6 +12,7 @@ import {
 export interface UserCardProps {
   id: string;
   name: string;
+  login: string;
   birth: string;
   email: string;
   phoneNumber: string;

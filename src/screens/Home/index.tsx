@@ -1,5 +1,5 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, StatusBar } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,37 +11,44 @@ import {
   ListHeader, ListTitle,
   ButtonFilter, IconFilter,
   ButtonText, ListText,
-  UserList
+  UserList, LoadContainer
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 import UserCard, { UserCardProps } from '../../components/UserCard';
+import { api } from '../../services/api';
+import { useTheme } from 'styled-components';
 
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [users, setUsers] = useState<UserCardProps[]>([])
+
   const navigation = useNavigation<any>();
+  const theme = useTheme();
   const { user, signOut } = useAuth()
 
+  async function loadUsers() {
+    api.post('', {
+      getUsersList: true,
+    })
+      .then(function (response) {
+        setIsLoading(false)
+        if (!response.data) {
 
-  const data: UserCardProps[] = [
-    {
-      id: '1',
-      name: 'Wesley',
-      birth: '28/07/1997',
-      email: 'wesleyaraujo@cc.ci.ufpb.br',
-      phoneNumber: '(83) 99178-4922',
-      cpf: '079.038.504.07',
-      status: 'ATIVO',
-    },
-    {
-      id: '2',
-      name: 'Wesley',
-      birth: '28/07/1997',
-      email: 'wesleyaraujo@cc.ci.ufpb.br',
-      phoneNumber: '(83) 99178-4922',
-      cpf: '079.038.504.07',
-      status: 'CANCELADO',
-    }
-  ]
+        } else {
+          setUsers(response.data)
+        }
+      })
+      .catch(function (error) {
+        setIsLoading(false)
+        console.log(error)
+        Alert.alert('Erro ao buscar lista de usuários.')
+      });
+  }
+
+  useEffect(() => {
+    loadUsers()
+  }, [])
 
   function handleFilter() {
     console.log('filtro')
@@ -50,32 +57,41 @@ export default function Home() {
   return (
     <Container>
       <StatusBar barStyle="light-content" />
-      <Header>
-        <UserWrapper>
-          <UserInfo>
-            <UserGreeting>Olá,</UserGreeting>
-            <UserName>{user.userName}</UserName>
-          </UserInfo>
-          <IconLogout name="power" onPress={signOut} />
-        </UserWrapper>
-      </Header>
-      <Body>
-        <ListHeader>
-          <ListTitle>Lista de Usuários</ListTitle>
-          <ButtonFilter onPress={handleFilter}>
-            <IconFilter name="filter" />
-            <ButtonText>Filtro</ButtonText>
-          </ButtonFilter>
-        </ListHeader>
-        <ListText>Clique em um usuário para altera-ló.</ListText>
+      {isLoading ?
+        <LoadContainer>
+          <ActivityIndicator color={theme.colors.primary} size="large" />
+        </LoadContainer> :
+        <>
+          <Header>
+            <UserWrapper>
+              <UserInfo>
+                <UserGreeting>Olá,</UserGreeting>
+                <UserName>{user.userName}</UserName>
+              </UserInfo>
+              <IconLogout name="power" onPress={signOut} />
+            </UserWrapper>
+          </Header>
+          <Body>
+            <ListHeader>
+              <ListTitle>Lista de Usuários</ListTitle>
+              <ButtonFilter onPress={handleFilter}>
+                <IconFilter name="filter" />
+                <ButtonText>Filtro</ButtonText>
+              </ButtonFilter>
+            </ListHeader>
+            <ListText>
+              {users[0] == undefined ? 'Nenhum usuário encontrado.' : 'Clique em um usuário para altera-ló.'}
+            </ListText>
 
-        <UserList
-          data={data}
-          kerExtractor={(item) => item.id}
-          renderItem={({ item }) => <UserCard data={item} />}
-        />
+            <UserList
+              data={users}
+              kerExtractor={(item) => item.id}
+              renderItem={({ item }) => <UserCard data={item} />}
+            />
 
-      </Body>
+          </Body>
+        </>
+      }
     </Container>
   )
 }
