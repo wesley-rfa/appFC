@@ -3,6 +3,8 @@ import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
+import UserRegister from '../screens/UserRegister';
+import Resume from '../screens/Resume';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -33,7 +35,7 @@ export function AppRoutes() {
 
       <Screen
         name="Cadastrar"
-        component={Home}
+        component={UserRegister}
         options={{
           tabBarIcon: (({ size, color }) =>
             <FontAwesome5 name="user-alt" size={size} color={color} />
@@ -43,7 +45,7 @@ export function AppRoutes() {
 
       <Screen
         name="Resumo"
-        component={Home}
+        component={Resume}
         options={{
           tabBarIcon: (({ size, color }) =>
             <MaterialIcons name="pie-chart" size={size} color={color} />
