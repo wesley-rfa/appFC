@@ -63,8 +63,25 @@ export default function Home() {
     console.log('filtro')
   }
 
-  function handleCancellAllUsers() {
-    console.log('exclui todos')
+  async function handleCancelAllUsers() {
+    setIsLoading(true)
+    api.post('', {
+      cancelAllUsers: true,
+      users
+    })
+      .then(function (response) {
+        if (response.data) {
+          loadUsers()
+        } else {
+          setIsLoading(false)
+          Alert.alert('Erro ao tentar cancelar todos os usuários listados.')
+        }
+      })
+      .catch(function (error) {
+        setIsLoading(false)
+        console.log(error)
+        Alert.alert('Erro ao cancelar todos os usuários listados.')
+      });
   }
 
   return (
@@ -102,7 +119,7 @@ export default function Home() {
               renderItem={({ item }) => <UserCard data={item} />}
             />
 
-            <PrimaryButton text="Excluir Todos" onPress={handleCancellAllUsers} />
+            {users[0] == undefined ? <></> : <PrimaryButton text="Excluir Todos" onPress={handleCancelAllUsers} />}
           </Body>
         </>
       }
