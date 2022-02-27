@@ -80,3 +80,9 @@ export const SendText = styled.Text`
     font-family: ${({ theme }) => theme.fonts.medium};
     font-size: ${RFValue(16)}px;
 `;
+
+export const LoadContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
