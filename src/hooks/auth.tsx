@@ -1,4 +1,5 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { Alert } from 'react-native';
 import { api } from '../services/api';
 
@@ -21,6 +22,8 @@ const AuthContext = createContext({} as AuthContextData);
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>({} as User)
 
+  const userStorageKey = "@appFC:user";
+
   async function signIn(userName: string, password: string) {
     api.post('', {
       name: userName,
@@ -30,10 +33,12 @@ function AuthProvider({ children }: AuthProviderProps) {
         if (!response.data) {
           Alert.alert('Nome de usuário ou senha inválidos.')
         } else {
-          setUser({
+          const userLogged = {
             id: parseInt(response.data.id),
             userName: response.data.nome,
-          })
+          }
+          setUser(userLogged)
+          AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged))
         }
       })
       .catch(function (error) {
@@ -41,6 +46,17 @@ function AuthProvider({ children }: AuthProviderProps) {
         Alert.alert('Erro ao tentar fazer login. Por favor, tente novamente.')
       });
   }
+
+  useEffect(() => {
+    async function loadUserStorageDate() {
+      const userStorage = await AsyncStorage.getItem(userStorageKey);
+      if (userStorage) {
+        const userLogged = JSON.parse(userStorage) as User;
+        setUser(userLogged);
+      }
+    }
+    loadUserStorageDate()
+  }, [])
 
   return (
     <AuthContext.Provider value={{ user, signIn }}>
