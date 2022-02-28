@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { ActivityIndicator, Alert, StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
@@ -11,7 +11,7 @@ import {
   ListHeader, ListTitle,
   ButtonFilter, IconFilter,
   ButtonText, ListText,
-  UserList, LoadContainer
+  UserList
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 import UserCard, { UserCardProps } from '../../components/UserCard';
@@ -27,7 +27,6 @@ export default function Home() {
   const [users, setUsers] = useState<UserCardProps[]>([])
 
   const navigation = useNavigation<any>();
-  const theme = useTheme();
   const { user, signOut } = useAuth()
 
   async function loadUsers() {
@@ -66,6 +65,10 @@ export default function Home() {
 
   function handleFilter() {
     console.log('filtro')
+  }
+
+  function handleChangeUser(user: UserCardProps) {
+    navigation.navigate('ChangeUser', user)
   }
 
   async function handleCancelAllUsers() {
@@ -119,7 +122,7 @@ export default function Home() {
             <UserList
               data={users}
               kerExtractor={(item) => item.id}
-              renderItem={({ item }) => <UserCard data={item} />}
+              renderItem={({ item }) => <UserCard data={item} onPress={() => handleChangeUser(item)} />}
             />
 
             {users[0] == undefined ? <></> : <PrimaryButton text="Excluir Todos" onPress={handleCancelAllUsers} />}

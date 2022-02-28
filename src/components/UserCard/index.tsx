@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacityProps } from 'react-native';
 
 import {
   Container, Header,
@@ -20,14 +21,13 @@ export interface UserCardProps {
   status: 'ATIVO' | 'CANCELADO';
 }
 
-interface Props {
+interface Props extends TouchableOpacityProps {
   data: UserCardProps;
-
 }
 
-export default function UserCard({ data }: Props) {
+export default function UserCard({ data, onPress }: Props) {
   return (
-    <Container status={data.status}>
+    <Container status={data.status} onPress={onPress}>
       <Header>
         <User>
           <IconUser name="user-alt" />

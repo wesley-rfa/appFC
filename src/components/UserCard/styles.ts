@@ -6,7 +6,7 @@ interface UserStatusProps {
   status: 'ATIVO' | 'CANCELADO';
 }
 
-export const Container = styled.View<UserStatusProps>`
+export const Container = styled.TouchableOpacity<UserStatusProps>`
   background: ${({ theme }) => theme.colors.shape};
   padding: ${RFValue(17)}px;
   border-radius: ${RFValue(5)}px;

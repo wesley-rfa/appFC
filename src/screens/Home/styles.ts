@@ -90,9 +90,3 @@ export const UserList = styled(
   }
 })`
 `;
-
-export const LoadContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
