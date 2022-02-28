@@ -128,7 +128,7 @@ export default function UserRegister() {
               <TextRegister>Para cadastrar um novo usuário preencha os campos abaixo.</TextRegister>
             </Header>
             <Body>
-              <Form>
+              <Form showsVerticalScrollIndicator={false}>
                 <InputText
                   placeholder="Nome"
                   value={name}

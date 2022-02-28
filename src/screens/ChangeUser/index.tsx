@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import {
+  Alert, Keyboard,
+  StatusBar, TouchableOpacity,
+  TouchableWithoutFeedback
+} from 'react-native';
+
+
 
 
 import {
   Container, Header,
+  HeaderText, ButtonBack,
   TextRegister, Body,
-  Form
+  Form, Info, DeleteLabel,
+  IconBack
 } from './styles';
 
-import HeaderScreen from '../../components/HeaderScreen';
 import { api } from '../../services/api';
 import LoadingContainer from '../../components/LoadingContainer';
 import InputText from '../../components/Form/InputText';
@@ -85,6 +92,28 @@ export default function ChangeUser() {
     }
 
   }
+  function handleCancelUser() {
+    setIsLoading(true)
+    api.post('', {
+      cancelUser: true,
+      id: user.id
+    })
+      .then(function (response) {
+        setIsLoading(false)
+        console.log(response.data)
+        if (response.data) {
+          navigation.navigate('Início')
+        } else {
+          Alert.alert('Erro ao tentar cancelar usuário.')
+        }
+      })
+      .catch(function (error) {
+        setIsLoading(false)
+        console.log(error)
+        Alert.alert('Erro ao cancelar usuário.')
+      });
+
+  }
 
   async function setUser(user: setUser) {
     api.post('', {
@@ -117,6 +146,10 @@ export default function ChangeUser() {
     setMotherName(user.motherName)
   }, [])
 
+  function goBack() {
+    navigation.goBack()
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -124,11 +157,19 @@ export default function ChangeUser() {
         {isLoading ?
           <LoadingContainer text="Alterando Dados" /> :
           <>
-            <HeaderScreen text="Alterar Usuário" />
-
             <Header>
-              <TextRegister>Alterar as informações do usuário.</TextRegister>
+              <ButtonBack onPress={goBack}>
+                <IconBack name="chevron-left" />
+              </ButtonBack>
+              <HeaderText>Alterar Usuário</HeaderText>
+              <TouchableOpacity onPress={handleCancelUser}>
+                <DeleteLabel>Excluir</DeleteLabel>
+              </TouchableOpacity>
             </Header>
+
+            <Info>
+              <TextRegister>Altere as informações do usuário.</TextRegister>
+            </Info>
             <Body>
               <Form>
                 <InputText

@@ -16,12 +16,22 @@ interface AgeGroupProps {
   idAgeGroup: string;
   ageGroup: string;
   amount: number;
+  percent: string;
+  color: string;
+}
+
+interface objChart {
+  x: string;
+  y: number;
   color: string;
 }
 
 export default function Resume() {
   const [isLoading, setIsLoading] = useState(true);
   const [ageGroup, setAgeGroup] = useState<AgeGroupProps[]>([])
+  const [objChart, setObjChart] = useState<objChart[]>([])
+
+  const obj: objChart[] = []
 
   async function loadResume() {
     api.post('', {
@@ -32,10 +42,18 @@ export default function Resume() {
           setIsLoading(false)
           const ageGroupFormatted: AgeGroupProps[] = response.data
             .map((group: AgeGroupProps) => {
+              if (group.amount > 0) {
+                obj.push({
+                  x: group.percent,
+                  y: group.amount,
+                  color: group.color
+                })
+              }
+
               return group
             })
           setAgeGroup(ageGroupFormatted)
-          console.log(ageGroup)
+          setObjChart(obj)
         }
       })
       .catch(function (error) {
@@ -60,9 +78,8 @@ export default function Resume() {
           <Content >
             <ChartContainer>
               <VictoryPie
-                data={ageGroup}
-                x={ageGroup.ageGroup}
-                y={ageGroup.amount}
+                data={objChart}
+                colorScale={objChart.map(category => category.color)}
               />
             </ChartContainer>
 

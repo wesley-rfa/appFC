@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 export const Container = styled.View`
@@ -9,6 +10,35 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
+  height: ${RFValue(113)}px;
+  background: ${({ theme }) => theme.colors.primary};
+  padding: ${RFValue(50)}px 24px 0px 24px;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+`;
+
+export const HeaderText = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(18)}px;
+  color: ${({ theme }) => theme.colors.shape};
+  
+`;
+export const ButtonBack = styled.TouchableOpacity`
+  align-items: center;
+  justify-content: center;
+`;
+export const IconBack = styled(MaterialIcons)`
+  font-size: ${RFValue(32)}px;
+  color: ${({ theme }) => theme.colors.shape};
+`;
+export const DeleteLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(14)}px;
+  color: ${({ theme }) => theme.colors.shape};
+`;
+
+export const Info = styled.View`
   margin: ${RFValue(21)}px 0px;
   padding: 0px ${RFValue(24)}px;
 `;

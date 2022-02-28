@@ -8,6 +8,8 @@ export const Container = styled.View`
 
 export const ChartContainer = styled.View`
   width:100%;
+  padding: 0px 24px;
+  margin-top: -${RFValue(20)}px;
   align-items: center;
 `;
 
