@@ -21,12 +21,33 @@ import PrimaryButton from '../../components/PrimaryButton';
 import LoadingContainer from '../../components/LoadingContainer';
 import FilterSelect from '../FilterSelect';
 
+interface FlagsFilter {
+  flagName: 0 | 1;
+  flagCPF: 0 | 1;
+  flagLogin: 0 | 1;
+  flagStatus: 0 | 1;
+  flagDateBirth: 0 | 1;
+  flagDateInsert: 0 | 1;
+  flagDateChange: 0 | 1;
+  flagAgeGroup: 0 | 1;
+}
+interface ObjFilter {
+  name: string;
+  cpf: string;
+  login: string;
+  status: string;
+  dateBegin: string;
+  dateEnd: string;
+  idAgeGroup: string;
+  flags: FlagsFilter;
+}
+
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [filter, setFilter] = useState({
-    key: 'filtro',
+    key: '0',
     name: 'filtro',
   });
   const [users, setUsers] = useState<UserCardProps[]>([])
