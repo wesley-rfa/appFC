@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
 
 import {
@@ -49,62 +49,64 @@ export default function ChangeUser() {
   }, [])
 
   return (
-    <Container>
-      <StatusBar barStyle="light-content" />
-      {isLoading ?
-        <LoadingContainer text="Buscando Dados" /> :
-        <>
-          <HeaderScreen text="Alterar Usuário" />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <StatusBar barStyle="light-content" />
+        {isLoading ?
+          <LoadingContainer text="Buscando Dados" /> :
+          <>
+            <HeaderScreen text="Alterar Usuário" />
 
-          <Header>
-            <TextRegister>Alterar as informações do usuário.</TextRegister>
-          </Header>
-          <Body>
-            <Form>
-              <InputText
-                placeholder="Nome"
-                value={name}
-                onChangeText={setName}
-              />
-              <InputText
-                placeholder="Login"
-                value={login}
-                onChangeText={setLogin}
-              />
-              <InputText
-                placeholder="E-mail"
-                value={email}
-                onChangeText={setEmail}
-              />
-              <InputMask
-                type={'cel-phone'}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-                placeholder="Telefone"
-              />
-              <InputMask
-                type={'cpf'}
-                value={cpf}
-                onChangeText={setCpf}
-                placeholder="CPF"
-              />
-              <InputMask
-                type="datetime"
-                value={date}
-                onChangeText={setDate}
-                placeholder="Data de Nascimento"
-              />
-              <InputText
-                placeholder="Nome da Mãe"
-                value={motherName}
-                onChangeText={setMotherName}
-              />
-            </Form>
-            <PrimaryButton text="Alterar" onPress={handleChangeUser} />
-          </Body>
+            <Header>
+              <TextRegister>Alterar as informações do usuário.</TextRegister>
+            </Header>
+            <Body>
+              <Form>
+                <InputText
+                  placeholder="Nome"
+                  value={name}
+                  onChangeText={setName}
+                />
+                <InputText
+                  placeholder="Login"
+                  value={login}
+                  onChangeText={setLogin}
+                />
+                <InputText
+                  placeholder="E-mail"
+                  value={email}
+                  onChangeText={setEmail}
+                />
+                <InputMask
+                  type={'cel-phone'}
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                  placeholder="Telefone"
+                />
+                <InputMask
+                  type={'cpf'}
+                  value={cpf}
+                  onChangeText={setCpf}
+                  placeholder="CPF"
+                />
+                <InputMask
+                  type="datetime"
+                  value={date}
+                  onChangeText={setDate}
+                  placeholder="Data de Nascimento"
+                />
+                <InputText
+                  placeholder="Nome da Mãe"
+                  value={motherName}
+                  onChangeText={setMotherName}
+                />
+              </Form>
+              <PrimaryButton text="Alterar" onPress={handleChangeUser} />
+            </Body>
 
-        </>
-      }
-    </Container>
+          </>
+        }
+      </Container>
+    </TouchableWithoutFeedback>
   )
 }

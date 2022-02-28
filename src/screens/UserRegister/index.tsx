@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -71,8 +71,8 @@ export default function UserRegister() {
   }
 
   function handleRegisterNewUser() {
-    setIsLoading(true)
     if (verifyEmptyInputs()) {
+      setIsLoading(true)
       if (verifyInputs() && verifySamePassword()) {
         const newUser = {
           name,
@@ -116,72 +116,77 @@ export default function UserRegister() {
 
 
   return (
-    <Container>
-      <StatusBar barStyle="light-content" />
-      {isLoading ?
-        <LoadingContainer text="Salvando Usuário" /> :
-        <>
-          <HeaderScreen text="Cadastro de Usuário" />
-          <Header>
-            <TextRegister>Para cadastrar um novo usuário preencha os campos abaixo.</TextRegister>
-          </Header>
-          <Body>
-            <Form>
-              <InputText
-                placeholder="Nome"
-                value={name}
-                onChangeText={setName}
-              />
-              <InputText
-                placeholder="Login"
-                value={login}
-                onChangeText={setLogin}
-              />
-              <InputText
-                placeholder="Senha"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={true}
-              />
-              <InputText
-                placeholder="Repita a Senha"
-                value={repeatPassword}
-                onChangeText={setRepeatPassword}
-                secureTextEntry={true}
-              />
-              <InputText
-                placeholder="E-mail"
-                value={email}
-                onChangeText={setEmail}
-              />
-              <InputMask
-                type={'cel-phone'}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-                placeholder="Telefone"
-              />
-              <InputMask
-                type={'cpf'}
-                value={cpf}
-                onChangeText={setCpf}
-                placeholder="CPF"
-              />
-              <InputMask
-                type="datetime"
-                value={date}
-                onChangeText={setDate}
-                placeholder="Data de Nascimento"
-              />
-              <InputText
-                placeholder="Nome da Mãe"
-                value={motherName}
-                onChangeText={setMotherName}
-              />
-            </Form>
-            <PrimaryButton text="Confirmar" onPress={handleRegisterNewUser} />
-          </Body>
-        </>
-      }
-    </Container >
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <StatusBar barStyle="light-content" />
+        {isLoading ?
+          <LoadingContainer text="Salvando Usuário" /> :
+          <>
+
+            <HeaderScreen text="Cadastro de Usuário" />
+            <Header>
+              <TextRegister>Para cadastrar um novo usuário preencha os campos abaixo.</TextRegister>
+            </Header>
+            <Body>
+              <Form>
+                <InputText
+                  placeholder="Nome"
+                  value={name}
+                  onChangeText={setName}
+                  autoCapitalize="words"
+                />
+                <InputText
+                  placeholder="Login"
+                  value={login}
+                  onChangeText={setLogin}
+                />
+                <InputText
+                  placeholder="Senha"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={true}
+                />
+                <InputText
+                  placeholder="Repita a Senha"
+                  value={repeatPassword}
+                  onChangeText={setRepeatPassword}
+                  secureTextEntry={true}
+                />
+                <InputText
+                  placeholder="E-mail"
+                  value={email}
+                  onChangeText={setEmail}
+                />
+                <InputMask
+                  type={'cel-phone'}
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                  placeholder="Telefone"
+                />
+                <InputMask
+                  type={'cpf'}
+                  value={cpf}
+                  onChangeText={setCpf}
+                  placeholder="CPF"
+                />
+                <InputMask
+                  type="datetime"
+                  value={date}
+                  onChangeText={setDate}
+                  placeholder="Data de Nascimento"
+                />
+                <InputText
+                  placeholder="Nome da Mãe"
+                  value={motherName}
+                  onChangeText={setMotherName}
+                />
+              </Form>
+              <PrimaryButton text="Confirmar" onPress={handleRegisterNewUser} />
+            </Body>
+
+          </>
+        }
+      </Container >
+    </TouchableWithoutFeedback>
   )
 }

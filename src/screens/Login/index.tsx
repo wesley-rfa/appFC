@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, StatusBar } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { useNavigation } from '@react-navigation/native';
@@ -48,39 +48,41 @@ export default function Login() {
   }
 
   return (
-    <Container>
-      <StatusBar barStyle="dark-content" />
-      {isLoading ?
-        <LoadingContainer text="Entrando" /> :
-        <>
-          <LogoArea>
-            <FcLogo width={RFValue(197)} height={RFValue(84)} />
-          </LogoArea>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <StatusBar barStyle="dark-content" />
+        {isLoading ?
+          <LoadingContainer text="Entrando" /> :
+          <>
+            <LogoArea>
+              <FcLogo width={RFValue(197)} height={RFValue(84)} />
+            </LogoArea>
 
-          <SignInArea>
-            <TitleLogin>Fazer Login</TitleLogin>
-            <TextInfo>Informe suas credenciais para acessar a plataforma.</TextInfo>
+            <SignInArea>
+              <TitleLogin>Fazer Login</TitleLogin>
+              <TextInfo>Informe suas credenciais para acessar a plataforma.</TextInfo>
 
-            <InputText
-              placeholder="Usuário"
-              value={login}
-              onChangeText={setLogin}
-            />
-            <InputText
-              placeholder="Senha"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={true}
-            />
+              <InputText
+                placeholder="Usuário"
+                value={login}
+                onChangeText={setLogin}
+              />
+              <InputText
+                placeholder="Senha"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={true}
+              />
 
-            <ForgotPassword>
-              <ForgotText onPress={handleForgotPassword}>Esqueci minha senha</ForgotText>
-            </ForgotPassword>
+              <ForgotPassword>
+                <ForgotText onPress={handleForgotPassword}>Esqueci minha senha</ForgotText>
+              </ForgotPassword>
 
-            <PrimaryButton text="Entrar" onPress={handleSignIn} />
-          </SignInArea>
-        </>
-      }
-    </Container>
+              <PrimaryButton text="Entrar" onPress={handleSignIn} />
+            </SignInArea>
+          </>
+        }
+      </Container>
+    </TouchableWithoutFeedback>
   )
 }

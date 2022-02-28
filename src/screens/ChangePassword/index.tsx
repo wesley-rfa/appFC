@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, StatusBar } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
 
@@ -33,7 +33,7 @@ export default function ChangePassword() {
       Alert.alert('Por favor, preencha todos os campos.')
       return false
     } if (newPassword !== repeatNewPassword) {
-      Alert.alert('As senhas não são iguais.')
+      Alert.alert('As senhas não correspondem.')
       return false
     } else {
       return true
@@ -61,33 +61,35 @@ export default function ChangePassword() {
   }
 
   return (
-    <Container>
-      {isLoading ?
-        <LoadingContainer text="Alterando Senha" /> :
-        <>
-          <StatusBar barStyle="light-content" />
-          <HeaderScreen text="Alterar Senha" />
-          <ChangeArea>
-            <ChangeTitle>Informar Nova Senha</ChangeTitle>
-            <ChangeText>Por favor {user.userName} informe sua nova senha.</ChangeText>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        {isLoading ?
+          <LoadingContainer text="Alterando Senha" /> :
+          <>
+            <StatusBar barStyle="light-content" />
+            <HeaderScreen text="Alterar Senha" />
+            <ChangeArea>
+              <ChangeTitle>Informar Nova Senha</ChangeTitle>
+              <ChangeText>Por favor {user.userName} informe sua nova senha.</ChangeText>
 
-            <InputText
-              placeholder="Nova Senha"
-              value={newPassword}
-              onChangeText={setNewPassword}
-              secureTextEntry={true}
-            />
-            <InputText
-              placeholder="Repetir Nova Senha"
-              value={repeatNewPassword}
-              onChangeText={setRepeatNewPassword}
-              secureTextEntry={true}
-            />
+              <InputText
+                placeholder="Nova Senha"
+                value={newPassword}
+                onChangeText={setNewPassword}
+                secureTextEntry={true}
+              />
+              <InputText
+                placeholder="Repetir Nova Senha"
+                value={repeatNewPassword}
+                onChangeText={setRepeatNewPassword}
+                secureTextEntry={true}
+              />
 
-            <PrimaryButton text="Confirmar" onPress={handleChangeConfirmPassword} />
-          </ChangeArea>
-        </>
-      }
-    </Container>
+              <PrimaryButton text="Confirmar" onPress={handleChangeConfirmPassword} />
+            </ChangeArea>
+          </>
+        }
+      </Container>
+    </TouchableWithoutFeedback>
   )
 }

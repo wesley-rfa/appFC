@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, ActivityIndicator, Alert } from 'react-native';
+import { StatusBar, ActivityIndicator, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
@@ -75,36 +75,38 @@ export default function ForgotPassword() {
   }
 
   return (
-    <Container>
-      <StatusBar barStyle="light-content" />
-      {isLoading ?
-        <LoadingContainer text="Buscando Usuário" /> :
-        <>
-          <HeaderScreen text="Recuperar Senha" />
-          <ForgotArea>
-            <ForgotTitle>Esqueceu sua Senha?</ForgotTitle>
-            <ForgotText>Preencha os campos abaixo que iremos te ajudar :)</ForgotText>
-            <InputText
-              placeholder="Usuário"
-              value={login}
-              onChangeText={setLogin}
-            />
-            <InputMask
-              type="datetime"
-              value={userDateBirth}
-              onChangeText={setUserDateBirth}
-              placeholder="Data de Nascimento"
-            />
-            <InputMask
-              type={'cpf'}
-              value={userCPF}
-              onChangeText={setUserCPF}
-              placeholder="CPF"
-            />
-            <PrimaryButton text="Recuperar" onPress={handleRecoverPassword} />
-          </ForgotArea>
-        </>
-      }
-    </Container>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <StatusBar barStyle="light-content" />
+        {isLoading ?
+          <LoadingContainer text="Buscando Usuário" /> :
+          <>
+            <HeaderScreen text="Recuperar Senha" />
+            <ForgotArea>
+              <ForgotTitle>Esqueceu sua Senha?</ForgotTitle>
+              <ForgotText>Preencha os campos abaixo que iremos te ajudar :)</ForgotText>
+              <InputText
+                placeholder="Usuário"
+                value={login}
+                onChangeText={setLogin}
+              />
+              <InputMask
+                type="datetime"
+                value={userDateBirth}
+                onChangeText={setUserDateBirth}
+                placeholder="Data de Nascimento"
+              />
+              <InputMask
+                type={'cpf'}
+                value={userCPF}
+                onChangeText={setUserCPF}
+                placeholder="CPF"
+              />
+              <PrimaryButton text="Recuperar" onPress={handleRecoverPassword} />
+            </ForgotArea>
+          </>
+        }
+      </Container>
+    </TouchableWithoutFeedback>
   )
 }
