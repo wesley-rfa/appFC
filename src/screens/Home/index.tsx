@@ -19,6 +19,7 @@ import { api } from '../../services/api';
 import { useTheme } from 'styled-components';
 import { maskCPF, maskPhoneNumber } from '../../utils/mask';
 import PrimaryButton from '../../components/PrimaryButton';
+import LoadingContainer from '../../components/LoadingContainer';
 
 
 export default function Home() {
@@ -92,9 +93,7 @@ export default function Home() {
     <Container>
       <StatusBar barStyle="light-content" />
       {isLoading ?
-        <LoadContainer>
-          <ActivityIndicator color={theme.colors.primary} size="large" />
-        </LoadContainer> :
+        <LoadingContainer text="Buscando Usuários" /> :
         <>
           <Header>
             <UserWrapper>

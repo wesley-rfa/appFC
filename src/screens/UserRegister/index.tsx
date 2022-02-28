@@ -119,7 +119,7 @@ export default function UserRegister() {
     <Container>
       <StatusBar barStyle="light-content" />
       {isLoading ?
-        <LoadingContainer /> :
+        <LoadingContainer text="Salvando Usuário" /> :
         <>
           <HeaderScreen text="Cadastro de Usuário" />
           <Header>
