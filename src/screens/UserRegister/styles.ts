@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { TextInputMask } from 'react-native-masked-text';
+
 
 export const Container = styled.View`
   flex:1;

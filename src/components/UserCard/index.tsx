@@ -18,6 +18,7 @@ export interface UserCardProps {
   email: string;
   phoneNumber: string;
   cpf: string;
+  motherName: string;
   status: 'ATIVO' | 'CANCELADO';
 }
 
