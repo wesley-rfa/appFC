@@ -16,8 +16,18 @@ import InputMask from '../../components/Form/InputMask';
 import PrimaryButton from '../../components/PrimaryButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserCardProps } from '../../components/UserCard';
+import { formatDate } from '../../utils/mask';
 
-
+interface setUser {
+  id: string;
+  name: string;
+  login: string;
+  email: string;
+  motherName: string;
+  cpf: string;
+  phoneNumber: string;
+  dateBirth: string;
+}
 
 export default function ChangeUser() {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +44,67 @@ export default function ChangeUser() {
   const route = useRoute();
   const user = route.params as UserCardProps;
 
+  function verifyEmptyInputs() {
+    if (name == '' || login == '' || email == '' || phoneNumber == ''
+      || cpf == '' || date == '' || motherName == '') {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  function verifyInputs() {
+    if (date.length == 10) {
+      return true
+    } else {
+      Alert.alert('Data de Nascimento Inválida')
+      return false
+    }
+
+  }
+
+
   function handleChangeUser() {
-    console.log('alterou')
+    if (verifyEmptyInputs()) {
+      setIsLoading(true)
+      if (verifyInputs()) {
+        const objUser = {
+          id: user.id,
+          name,
+          login,
+          email,
+          motherName,
+          cpf: cpf.replace(/-/g, "").replace(/\./g, ""),
+          phoneNumber: phoneNumber.replace(/\D/g, ""),
+          dateBirth: formatDate(date)
+        }
+        setUser(objUser)
+      }
+    } else {
+      Alert.alert('Por favor, preencha todos os campos.')
+    }
+
+  }
+
+  async function setUser(user: setUser) {
+    api.post('', {
+      setUser: true,
+      user
+    })
+      .then(function (response) {
+        setIsLoading(false)
+        console.log(response.data)
+        if (response.data) {
+          navigation.navigate('Início')
+        } else {
+          Alert.alert('Erro ao tentar alterar usuário.')
+        }
+      })
+      .catch(function (error) {
+        setIsLoading(false)
+        console.log(error)
+        Alert.alert('Erro ao alterar usuário.')
+      });
   }
 
   useEffect(() => {
@@ -53,7 +122,7 @@ export default function ChangeUser() {
       <Container>
         <StatusBar barStyle="light-content" />
         {isLoading ?
-          <LoadingContainer text="Buscando Dados" /> :
+          <LoadingContainer text="Alterando Dados" /> :
           <>
             <HeaderScreen text="Alterar Usuário" />
 
