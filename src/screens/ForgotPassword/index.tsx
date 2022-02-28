@@ -67,9 +67,18 @@ export default function ForgotPassword() {
           <ForgotArea>
             <ForgotTitle>Esqueceu sua Senha?</ForgotTitle>
             <ForgotText>Preencha os campos abaixo que iremos te ajudar :)</ForgotText>
-            <UserName placeholder="Usuário" onChangeText={setUserName}></UserName>
-            <UserBirthDate placeholder="Data de Nascimento" onChangeText={setUserDateBirth}></UserBirthDate>
-            <UserCPF placeholder="CPF" onChangeText={setUserCPF}></UserCPF>
+            <UserName
+              placeholder="Usuário"
+              onChangeText={setUserName}
+            />
+            <UserBirthDate
+              placeholder="Data de Nascimento"
+              onChangeText={setUserDateBirth}
+            />
+            <UserCPF
+              placeholder="CPF"
+              onChangeText={setUserCPF}
+            />
             <PrimaryButton text="Recuperar" onPress={handleRecoverPassword} />
           </ForgotArea>
         </>

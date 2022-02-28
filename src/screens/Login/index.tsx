@@ -63,8 +63,14 @@ export default function Login() {
             <TitleLogin>Fazer Login</TitleLogin>
             <TextInfo>Informe suas credenciais para acessar a plataforma.</TextInfo>
 
-            <UserName placeholder="Usuário" onChangeText={setLogin}></UserName>
-            <UserPassword placeholder="Senha" onChangeText={setPassword}></UserPassword>
+            <UserName
+              placeholder="Usuário"
+              onChangeText={setLogin}
+            />
+            <UserPassword
+              placeholder="Senha"
+              onChangeText={setPassword}
+            />
 
             <ForgotPassword>
               <ForgotText onPress={handleForgotPassword}>Esqueci minha senha</ForgotText>

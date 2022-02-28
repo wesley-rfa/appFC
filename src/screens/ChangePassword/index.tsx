@@ -33,6 +33,9 @@ export default function ChangePassword() {
     if (newPassword == '' || repeatNewPassword == '') {
       Alert.alert('Por favor, preencha todos os campos.')
       return false
+    } if (newPassword !== repeatNewPassword) {
+      Alert.alert('As senhas não são iguais.')
+      return false
     } else {
       return true
     }
@@ -76,7 +79,11 @@ export default function ChangePassword() {
               onChangeText={setNewPassword}
               secureTextEntry={true}
             />
-            <RepeatNewPassword placeholder="Repetir Nova Senha" onChangeText={setRepeatNewPassword}></RepeatNewPassword>
+            <RepeatNewPassword
+              placeholder="Repetir Nova Senha"
+              onChangeText={setRepeatNewPassword}
+              secureTextEntry={true}
+            />
 
             <PrimaryButton text="Confirmar" onPress={handleChangeConfirmPassword} />
           </ChangeArea>
