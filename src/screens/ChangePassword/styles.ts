@@ -24,30 +24,4 @@ export const ChangeText = styled.Text`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-export const NewPassword = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    margin: 18px 0px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
 
-`;
-export const RepeatNewPassword = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    margin: 0px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
-`;
-
-export const LoadContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;

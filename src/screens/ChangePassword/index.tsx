@@ -8,11 +8,11 @@ import { useTheme } from 'styled-components';
 
 import {
   Container, ChangeArea,
-  ChangeTitle, ChangeText,
-  NewPassword, RepeatNewPassword,
-  LoadContainer
+  ChangeTitle, ChangeText
 } from './styles';
 import { api } from '../../services/api';
+import LoadingContainer from '../../components/LoadingContainer';
+import InputText from '../../components/Form/InputText';
 
 interface Params {
   userId: number,
@@ -25,7 +25,6 @@ export default function ChangePassword() {
   const [repeatNewPassword, setRepeatNewPassword] = useState('');
 
   const navigation = useNavigation<any>();
-  const theme = useTheme()
   const route = useRoute();
   const user = route.params as Params;
 
@@ -42,8 +41,8 @@ export default function ChangePassword() {
   }
 
   function handleChangeConfirmPassword() {
-    setIsLoading(true)
     if (verifyInputs()) {
+      setIsLoading(true)
       api.post('', {
         updatePassword: true,
         userId: user.userId,
@@ -52,7 +51,7 @@ export default function ChangePassword() {
         .then(function (response) {
           setIsLoading(false)
           console.log(response.data)
-          navigation.navigate('PasswordSuccess')
+          navigation.navigate('PasswordSuccess', { userName: user.userName })
         })
         .catch(function (error) {
           setIsLoading(false)
@@ -64,9 +63,7 @@ export default function ChangePassword() {
   return (
     <Container>
       {isLoading ?
-        <LoadContainer>
-          <ActivityIndicator color={theme.colors.primary} size="large" />
-        </LoadContainer> :
+        <LoadingContainer text="Alterando Senha" /> :
         <>
           <StatusBar barStyle="light-content" />
           <HeaderScreen text="Alterar Senha" />
@@ -74,13 +71,15 @@ export default function ChangePassword() {
             <ChangeTitle>Informar Nova Senha</ChangeTitle>
             <ChangeText>Por favor {user.userName} informe sua nova senha.</ChangeText>
 
-            <NewPassword
+            <InputText
               placeholder="Nova Senha"
+              value={newPassword}
               onChangeText={setNewPassword}
               secureTextEntry={true}
             />
-            <RepeatNewPassword
+            <InputText
               placeholder="Repetir Nova Senha"
+              value={repeatNewPassword}
               onChangeText={setRepeatNewPassword}
               secureTextEntry={true}
             />

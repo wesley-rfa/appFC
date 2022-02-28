@@ -22,43 +22,6 @@ export const ForgotText = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${RFValue(20)}px;
 `;
 
-export const UserName = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    margin: 18px 0px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
-
-`;
-export const UserBirthDate = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    margin: 0px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
-`;
-
-export const UserCPF = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    margin: 18px 0px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
-`;
-
-export const LoadContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
