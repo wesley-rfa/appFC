@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, StatusBar, TouchableOpacity } from 'react-native';
-
+import { Picker } from '@react-native-picker/picker';
 
 import {
   Container, Header,
@@ -15,31 +15,77 @@ import LoadingContainer from '../../components/LoadingContainer';
 import { filtersSelectOptions } from '../../utils/filterSelectOptions';
 import InputText from '../../components/Form/InputText';
 import InputMask from '../../components/Form/InputMask';
+import { ageGroupOptions } from '../../utils/ageGroupOptions';
 
 interface Filter {
   key: string;
-  name: string;
+  option: string;
 }
 
 interface Props {
   filter: Filter;
   setFilter: (filter: Filter) => void;
+
+  nameFilter: string;
+  setNameFilter: (name: string) => void;
+
+  cpfFilter: string;
+  setCpfFilter: (cpf: string) => void;
+
+  loginFilter: string;
+  setLoginFilter: (login: string) => void;
+
+  statusFilter: string;
+  setStatusFilter: (login: string) => void;
+
+  dateBeginFilter: string;
+  setDateBeginFilter: (login: string) => void;
+
+  dateEndFilter: string;
+  setDateEndFilter: (login: string) => void;
+
+  idAgeGroupFilter: string;
+  setIdAgeGroupFilter: (login: string) => void;
+
   closeFilterSelect: () => void;
+  closeFilterSelectWithFilter: () => void;
 }
 
 export default function FilterSelect({
   filter,
   setFilter,
-  closeFilterSelect
+
+  nameFilter,
+  setNameFilter,
+
+  cpfFilter,
+  setCpfFilter,
+
+  loginFilter,
+  setLoginFilter,
+
+  statusFilter,
+  setStatusFilter,
+
+  dateBeginFilter,
+  setDateBeginFilter,
+
+  dateEndFilter,
+  setDateEndFilter,
+
+  idAgeGroupFilter,
+  setIdAgeGroupFilter,
+
+  closeFilterSelect,
+  closeFilterSelectWithFilter
 }: Props) {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState('');
-  const [login, setLogin] = useState('');
-  const [cpf, setCpf] = useState('');
-
-  function handleFilterSelect(filterSelect: Filter) {
-    setFilter(filterSelect)
+  const [selectedValue, setSelectedValue] = useState(filter.key);
+  function handlePicker(value: string) {
+    setSelectedValue(value)
+    const filterSelected: Filter[] = filtersSelectOptions.filter((option) => { return option.key === value })
+    setFilter(filterSelected[0])
   }
 
   return (
@@ -53,32 +99,29 @@ export default function FilterSelect({
               <IconBack name="chevron-left" />
             </ButtonBack>
             <HeaderText>Selecione um Filtro</HeaderText>
-            <TouchableOpacity onPress={closeFilterSelect}>
+            <TouchableOpacity onPress={closeFilterSelectWithFilter}>
               {filter.key !== '0' && <DeleteLabel>Filtrar</DeleteLabel>}
             </TouchableOpacity>
           </Header>
 
-          <OptionsList
-            data={filtersSelectOptions}
-            keyExtractor={(item) => item.key}
-            renderItem={({ item }) => (
-              <OptionSelect
-                onPress={() => handleFilterSelect(item)}
-                isActive={filter.key === item.key}
-              >
-                <OptionName isActive={filter.key === item.key}>{item.option}</OptionName>
-              </OptionSelect>
+
+          <Picker
+            selectedValue={selectedValue}
+            onValueChange={(itemValue) => handlePicker(itemValue)}
+          >
+            {filtersSelectOptions.map((item) =>
+              <Picker.Item label={item.option} value={item.key} key={item.key} />
             )}
-            ItemSeparatorComponent={() => <Separator />}
-          />
+
+          </Picker>
 
           <Form>
 
             {filter.key == '1' &&
               <InputText
                 placeholder="Nome"
-                value={name}
-                onChangeText={setName}
+                value={nameFilter}
+                onChangeText={setNameFilter}
                 autoCapitalize="words"
               />
             }
@@ -86,17 +129,55 @@ export default function FilterSelect({
             {filter.key == '2' &&
               <InputMask
                 type={'cpf'}
-                value={cpf}
-                onChangeText={setCpf}
+                value={cpfFilter}
+                onChangeText={setCpfFilter}
                 placeholder="CPF"
               />
             }
             {filter.key == '3' &&
               <InputText
                 placeholder="Login"
-                value={login}
-                onChangeText={setLogin}
+                value={loginFilter}
+                onChangeText={setLoginFilter}
               />
+            }
+            {filter.key == '4' &&
+              <Picker
+                selectedValue={statusFilter}
+                onValueChange={(itemValue) => setStatusFilter(itemValue)}
+              >
+                <Picker.Item label="ATIVO" value="ATIVO" />
+                <Picker.Item label="CANCELADO" value="CANCELADO" />
+
+              </Picker>
+            }
+            {(filter.key == '5' || filter.key == '6' || filter.key == '7') &&
+              <>
+                <InputMask
+                  type="datetime"
+                  value={dateBeginFilter}
+                  onChangeText={setDateBeginFilter}
+                  placeholder="Data de Início"
+                />
+                <InputMask
+                  type="datetime"
+                  value={dateEndFilter}
+                  onChangeText={setDateEndFilter}
+                  placeholder="Data de Fim"
+                />
+              </>
+
+            }
+            {filter.key == '8' &&
+              <Picker
+                selectedValue={idAgeGroupFilter}
+                onValueChange={(itemValue) => setIdAgeGroupFilter(itemValue)}
+              >
+                {ageGroupOptions.map((item) =>
+                  <Picker.Item label={item.option} value={item.key} key={item.key} />
+                )}
+
+              </Picker>
             }
           </Form>
 

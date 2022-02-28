@@ -21,34 +21,22 @@ import PrimaryButton from '../../components/PrimaryButton';
 import LoadingContainer from '../../components/LoadingContainer';
 import FilterSelect from '../FilterSelect';
 
-interface FlagsFilter {
-  flagName: 0 | 1;
-  flagCPF: 0 | 1;
-  flagLogin: 0 | 1;
-  flagStatus: 0 | 1;
-  flagDateBirth: 0 | 1;
-  flagDateInsert: 0 | 1;
-  flagDateChange: 0 | 1;
-  flagAgeGroup: 0 | 1;
-}
-interface ObjFilter {
-  name: string;
-  cpf: string;
-  login: string;
-  status: string;
-  dateBegin: string;
-  dateEnd: string;
-  idAgeGroup: string;
-  flags: FlagsFilter;
-}
-
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+
+  const [nameFilter, setNameFilter] = useState('');
+  const [loginFilter, setLoginFilter] = useState('');
+  const [cpfFilter, setCpfFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ATIVO');
+  const [dateBeginFilter, setDateBeginFilter] = useState('');
+  const [dateEndFilter, setDateEndFilter] = useState('ATIVO');
+  const [idAgeGroupFilter, setIdAgeGroupFilter] = useState('1');
+
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [filter, setFilter] = useState({
     key: '0',
-    name: 'filtro',
+    option: '',
   });
   const [users, setUsers] = useState<UserCardProps[]>([])
 
@@ -56,9 +44,20 @@ export default function Home() {
   const { user, signOut } = useAuth()
 
   async function loadUsers() {
+    const objFilter = {
+      name: nameFilter,
+      cpf: cpfFilter,
+      login: loginFilter,
+      status: statusFilter,
+      dateBegin: dateBeginFilter,
+      dateEnd: dateEndFilter,
+      idAgeGroup: idAgeGroupFilter,
+      keyFilter: filter.key,
+    }
     setIsLoading(true)
     api.post('', {
       getUsersList: true,
+      objFilter
     })
       .then(function (response) {
         setIsLoading(false)
@@ -121,6 +120,10 @@ export default function Home() {
   function handleCloseFilterSelect() {
     setFilterModalOpen(false)
   }
+  function handleCloseFilterSelectFilter() {
+    setFilterModalOpen(false)
+
+  }
 
   return (
     <Container>
@@ -162,7 +165,30 @@ export default function Home() {
             <FilterSelect
               filter={filter}
               setFilter={setFilter}
+
+              nameFilter={nameFilter}
+              setNameFilter={setNameFilter}
+
+              loginFilter={loginFilter}
+              setLoginFilter={setLoginFilter}
+
+              cpfFilter={cpfFilter}
+              setCpfFilter={setCpfFilter}
+
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+
+              dateBeginFilter={dateBeginFilter}
+              setDateBeginFilter={setDateBeginFilter}
+
+              dateEndFilter={dateEndFilter}
+              setDateEndFilter={setDateEndFilter}
+
+              idAgeGroupFilter={idAgeGroupFilter}
+              setIdAgeGroupFilter={setIdAgeGroupFilter}
+
               closeFilterSelect={handleCloseFilterSelect}
+              closeFilterSelectWithFilter={handleCloseFilterSelectFilter}
             />
           </Modal>
         </>
