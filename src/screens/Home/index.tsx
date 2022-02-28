@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { Alert, StatusBar, Modal } from 'react-native';
 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
@@ -16,14 +16,19 @@ import {
 import { useAuth } from '../../hooks/auth';
 import UserCard, { UserCardProps } from '../../components/UserCard';
 import { api } from '../../services/api';
-import { useTheme } from 'styled-components';
 import { maskCPF, maskPhoneNumber } from '../../utils/mask';
 import PrimaryButton from '../../components/PrimaryButton';
 import LoadingContainer from '../../components/LoadingContainer';
+import FilterSelect from '../FilterSelect';
 
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
+  const [filter, setFilter] = useState({
+    key: 'filtro',
+    name: 'filtro',
+  });
   const [users, setUsers] = useState<UserCardProps[]>([])
 
   const navigation = useNavigation<any>();
@@ -63,8 +68,8 @@ export default function Home() {
     loadUsers()
   }, []));
 
-  function handleFilter() {
-    console.log('filtro')
+  function handleFilterModal() {
+    setFilterModalOpen(true)
   }
 
   function handleChangeUser(user: UserCardProps) {
@@ -92,6 +97,10 @@ export default function Home() {
       });
   }
 
+  function handleCloseFilterSelect() {
+    setFilterModalOpen(false)
+  }
+
   return (
     <Container>
       <StatusBar barStyle="light-content" />
@@ -110,7 +119,7 @@ export default function Home() {
           <Body>
             <ListHeader>
               <ListTitle>Lista de Usuários</ListTitle>
-              <ButtonFilter onPress={handleFilter}>
+              <ButtonFilter onPress={handleFilterModal}>
                 <IconFilter name="filter" />
                 <ButtonText>Filtro</ButtonText>
               </ButtonFilter>
@@ -127,6 +136,14 @@ export default function Home() {
 
             {users[0] == undefined ? <></> : <PrimaryButton text="Excluir Todos" onPress={handleCancelAllUsers} />}
           </Body>
+
+          <Modal visible={filterModalOpen}>
+            <FilterSelect
+              filter={filter}
+              setFilter={setFilter}
+              closeFilterSelect={handleCloseFilterSelect}
+            />
+          </Modal>
         </>
       }
     </Container>

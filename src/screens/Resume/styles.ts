@@ -9,10 +9,11 @@ export const Container = styled.View`
 export const ChartContainer = styled.View`
   width:100%;
   padding: 0px 24px;
-  margin-top: -${RFValue(20)}px;
+  margin-top: -${RFValue(30)}px;
   align-items: center;
 `;
 
 export const Content = styled.ScrollView.attrs({
   contentContainerStyle: { flex: 1, padding: 24 }
-})``;
+})`
+`;

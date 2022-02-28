@@ -11,6 +11,7 @@ import HeaderScreen from '../../components/HeaderScreen';
 import AgeGroupCard from '../../components/AgeGroupCard';
 import { api } from '../../services/api';
 import LoadingContainer from '../../components/LoadingContainer';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface AgeGroupProps {
   idAgeGroup: string;
@@ -80,6 +81,7 @@ export default function Resume() {
               <VictoryPie
                 data={objChart}
                 colorScale={objChart.map(category => category.color)}
+                height={RFValue(270)}
               />
             </ChartContainer>
 
