@@ -28,7 +28,7 @@ export const Title = styled.Text`
 `;
 
 export const Amount = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.regular};
+  font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(15)}px;
   color: ${({ theme }) => theme.colors.title};
 `;

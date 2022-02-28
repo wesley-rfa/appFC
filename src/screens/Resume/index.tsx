@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
 
+import { VictoryPie } from 'victory-native';
+
 import {
-  Container, Content
+  Container, Content,
+  ChartContainer
 } from './styles';
 import HeaderScreen from '../../components/HeaderScreen';
 import AgeGroupCard from '../../components/AgeGroupCard';
 import { api } from '../../services/api';
+import LoadingContainer from '../../components/LoadingContainer';
 
 interface AgeGroupProps {
   idAgeGroup: string;
@@ -16,6 +20,7 @@ interface AgeGroupProps {
 }
 
 export default function Resume() {
+  const [isLoading, setIsLoading] = useState(true);
   const [ageGroup, setAgeGroup] = useState<AgeGroupProps[]>([])
 
   async function loadResume() {
@@ -24,6 +29,7 @@ export default function Resume() {
     })
       .then(function (response) {
         if (response.data) {
+          setIsLoading(false)
           const ageGroupFormatted: AgeGroupProps[] = response.data
             .map((group: AgeGroupProps) => {
               return group
@@ -34,6 +40,7 @@ export default function Resume() {
       })
       .catch(function (error) {
         console.log(error)
+        setIsLoading(false)
         Alert.alert('Erro ao buscar resumo por faixa etária.')
       });
   }
@@ -45,21 +52,33 @@ export default function Resume() {
   return (
     <Container>
       <StatusBar barStyle="light-content" />
-      <HeaderScreen text="Resumo Por Faixa Etária" />
+      {isLoading ?
+        <LoadingContainer text="Buscando Dados" /> :
+        <>
+          <HeaderScreen text="Resumo Por Faixa Etária" />
 
-      <Content >
-        {
-          ageGroup.map(item => (
-            <AgeGroupCard
-              key={item.idAgeGroup}
-              title={item.ageGroup}
-              amount={item.amount}
-              color={item.color}
-            />
-          ))
-        }
-      </Content>
+          <Content >
+            <ChartContainer>
+              <VictoryPie
+                data={ageGroup}
+                x={ageGroup.ageGroup}
+                y={ageGroup.amount}
+              />
+            </ChartContainer>
 
+            {
+              ageGroup.map(item => (
+                <AgeGroupCard
+                  key={item.idAgeGroup}
+                  title={item.ageGroup}
+                  amount={item.amount}
+                  color={item.color}
+                />
+              ))
+            }
+          </Content>
+        </>
+      }
     </Container>
   )
 }
