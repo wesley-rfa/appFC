@@ -18,3 +18,9 @@ export function maskPhoneNumber(number: string) {
   }
   return number
 }
+
+export function formatDate(date: string) {
+  let dataArray = date.split('/')
+  return dataArray[2] + '-' + dataArray[1] + '-' + dataArray[1];
+
+}

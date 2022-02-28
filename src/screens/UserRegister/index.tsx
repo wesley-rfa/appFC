@@ -13,6 +13,8 @@ import PrimaryButton from '../../components/PrimaryButton';
 import InputMask from '../../components/Form/InputMask';
 import InputText from '../../components/Form/InputText';
 import { api } from '../../services/api';
+import { formatDate } from '../../utils/mask';
+import LoadingContainer from '../../components/LoadingContainer';
 
 interface newUser {
   name: string;
@@ -26,6 +28,7 @@ interface newUser {
 }
 
 export default function UserRegister() {
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -37,12 +40,6 @@ export default function UserRegister() {
   const [motherName, setMotherName] = useState('');
 
   const navigation = useNavigation<any>();
-
-  function formatDate(date: string) {
-    let dataArray = date.split('/')
-    return dataArray[2] + '-' + dataArray[1] + '-' + dataArray[1];
-
-  }
 
   function verifyEmptyInputs() {
     if (name == '' || login == '' || password == '' || repeatPassword == ''
@@ -74,6 +71,7 @@ export default function UserRegister() {
   }
 
   function handleRegisterNewUser() {
+    setIsLoading(true)
     if (verifyEmptyInputs()) {
       if (verifyInputs() && verifySamePassword()) {
         const newUser = {
@@ -99,6 +97,7 @@ export default function UserRegister() {
       newUser,
     })
       .then(function (response) {
+        setIsLoading(false)
         if (parseInt(response.data) == 1) {
           navigation.navigate('Início')
         } else if (parseInt(response.data) == 1) {
@@ -109,6 +108,7 @@ export default function UserRegister() {
       })
       .catch(function (error) {
         console.log(error)
+        setIsLoading(false)
         Alert.alert('Erro ao cadastrar novo usuário. Por favor, tente novamente.')
       });
   }
@@ -118,65 +118,70 @@ export default function UserRegister() {
   return (
     <Container>
       <StatusBar barStyle="light-content" />
-      <HeaderScreen text="Cadastro de Usuário" />
-      <Header>
-        <TextRegister>Para cadastrar um novo usuário preencha os campos abaixo.</TextRegister>
-      </Header>
-      <Body>
-        <Form>
-          <InputText
-            placeholder="Nome"
-            value={name}
-            onChangeText={setName}
-          />
-          <InputText
-            placeholder="Login"
-            value={login}
-            onChangeText={setLogin}
-          />
-          <InputText
-            placeholder="Senha"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={true}
-          />
-          <InputText
-            placeholder="Repita a Senha"
-            value={repeatPassword}
-            onChangeText={setRepeatPassword}
-            secureTextEntry={true}
-          />
-          <InputText
-            placeholder="E-mail"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <InputMask
-            type={'cel-phone'}
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            placeholder="Telefone"
-          />
-          <InputMask
-            type={'cpf'}
-            value={cpf}
-            onChangeText={setCpf}
-            placeholder="CPF"
-          />
-          <InputMask
-            type="datetime"
-            value={date}
-            onChangeText={setDate}
-            placeholder="Data de Nascimento"
-          />
-          <InputText
-            placeholder="Nome da Mãe"
-            value={motherName}
-            onChangeText={setMotherName}
-          />
-        </Form>
-        <PrimaryButton text="Confirmar" onPress={handleRegisterNewUser} />
-      </Body>
-    </Container>
+      {isLoading ?
+        <LoadingContainer /> :
+        <>
+          <HeaderScreen text="Cadastro de Usuário" />
+          <Header>
+            <TextRegister>Para cadastrar um novo usuário preencha os campos abaixo.</TextRegister>
+          </Header>
+          <Body>
+            <Form>
+              <InputText
+                placeholder="Nome"
+                value={name}
+                onChangeText={setName}
+              />
+              <InputText
+                placeholder="Login"
+                value={login}
+                onChangeText={setLogin}
+              />
+              <InputText
+                placeholder="Senha"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={true}
+              />
+              <InputText
+                placeholder="Repita a Senha"
+                value={repeatPassword}
+                onChangeText={setRepeatPassword}
+                secureTextEntry={true}
+              />
+              <InputText
+                placeholder="E-mail"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <InputMask
+                type={'cel-phone'}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                placeholder="Telefone"
+              />
+              <InputMask
+                type={'cpf'}
+                value={cpf}
+                onChangeText={setCpf}
+                placeholder="CPF"
+              />
+              <InputMask
+                type="datetime"
+                value={date}
+                onChangeText={setDate}
+                placeholder="Data de Nascimento"
+              />
+              <InputText
+                placeholder="Nome da Mãe"
+                value={motherName}
+                onChangeText={setMotherName}
+              />
+            </Form>
+            <PrimaryButton text="Confirmar" onPress={handleRegisterNewUser} />
+          </Body>
+        </>
+      }
+    </Container >
   )
 }
