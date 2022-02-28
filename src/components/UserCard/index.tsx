@@ -7,7 +7,7 @@ import {
   UserName, UserBirth,
   Details, Email,
   PhoneNumber, Cpf,
-  Footer, TrashIcon
+  Footer
 } from './styles';
 
 export interface UserCardProps {
@@ -34,14 +34,13 @@ export default function UserCard({ data, onPress }: Props) {
           <IconUser name="user-alt" />
           <UserName>{data.name}</UserName>
         </User>
-        <UserBirth>{data.birth}</UserBirth>
       </Header>
       <Details>
         <Email>{data.email}</Email>
         <PhoneNumber>{data.phoneNumber}</PhoneNumber>
         <Footer>
           <Cpf>{data.cpf}</Cpf>
-          {data.status == 'ATIVO' && <TrashIcon name="trash" />}
+          <UserBirth>{data.birth}</UserBirth>
         </Footer>
       </Details>
     </Container>

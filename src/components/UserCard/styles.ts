@@ -63,8 +63,3 @@ export const Cpf = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
-
-export const TrashIcon = styled(FontAwesome5)`
-  font-size: ${RFValue(20)}px;
-  color: ${({ theme }) => theme.colors.primary};
-`;
