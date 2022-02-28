@@ -70,6 +70,7 @@ export default function Login() {
             <UserPassword
               placeholder="Senha"
               onChangeText={setPassword}
+              secureTextEntry={true}
             />
 
             <ForgotPassword>

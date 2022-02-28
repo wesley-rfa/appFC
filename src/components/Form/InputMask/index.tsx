@@ -5,22 +5,22 @@ import {
   Container
 } from './styles';
 
-interface inputProps {
-  value: string;
-  onChangeText(): any;
-}
 
-export default function InputPhone({ value, onChangeText }: TextInputMaskProps) {
+export default function InputMask({
+  type, placeholder, value, onChangeText
+}: TextInputMaskProps) {
   return (
     <Container
-      type={'cel-phone'}
+      type={type}
       options={{
         maskType: 'BRL',
         withDDD: true,
-        dddMask: '(99) '
+        dddMask: '(99) ',
+        format: 'DD/MM/YYYY'
       }}
       value={value}
       onChangeText={onChangeText}
+      placeholder={placeholder}
     />
   )
 }

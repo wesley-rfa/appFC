@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { ActivityIndicator, Alert, StatusBar } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import {
   Container, Header,
@@ -58,6 +58,10 @@ export default function Home() {
   useEffect(() => {
     loadUsers()
   }, [])
+
+  useFocusEffect(useCallback(() => {
+    loadUsers()
+  }, []));
 
   function handleFilter() {
     console.log('filtro')

@@ -8,7 +8,7 @@ export const Container = styled(TextInputMask)`
   color: ${({ theme }) => theme.colors.title};
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 5px;
-  margin: 0px;
+  margin: 5px 0px;
   padding: 16px;
   width: 100%;
   height: ${RFValue(58)}px;
