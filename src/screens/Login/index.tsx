@@ -11,11 +11,12 @@ import PrimaryButton from '../../components/PrimaryButton';
 import {
   Container, LogoArea,
   SignInArea, TitleLogin,
-  TextInfo, UserName,
-  UserPassword, ForgotPassword,
-  ForgotText, LoadContainer
+  TextInfo, ForgotPassword,
+  ForgotText
 } from './styles';
 import { useAuth } from '../../hooks/auth';
+import LoadingContainer from '../../components/LoadingContainer';
+import InputText from '../../components/Form/InputText';
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +24,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation<any>();
-  const theme = useTheme();
   const { signIn } = useAuth();
 
   function verifyInputs() {
@@ -51,9 +51,7 @@ export default function Login() {
     <Container>
       <StatusBar barStyle="dark-content" />
       {isLoading ?
-        <LoadContainer>
-          <ActivityIndicator color={theme.colors.primary} size="large" />
-        </LoadContainer> :
+        <LoadingContainer text="Entrando" /> :
         <>
           <LogoArea>
             <FcLogo width={RFValue(197)} height={RFValue(84)} />
@@ -63,12 +61,14 @@ export default function Login() {
             <TitleLogin>Fazer Login</TitleLogin>
             <TextInfo>Informe suas credenciais para acessar a plataforma.</TextInfo>
 
-            <UserName
+            <InputText
               placeholder="Usuário"
+              value={login}
               onChangeText={setLogin}
             />
-            <UserPassword
+            <InputText
               placeholder="Senha"
+              value={password}
               onChangeText={setPassword}
               secureTextEntry={true}
             />

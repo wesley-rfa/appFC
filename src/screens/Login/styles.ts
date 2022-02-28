@@ -33,29 +33,6 @@ export const TextInfo = styled.Text`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-export const UserName = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    margin: 18px 0px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
-
-`;
-
-export const UserPassword = styled.TextInput`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.title};
-    background-color: ${({ theme }) => theme.colors.shape};
-    border-radius: 5px;
-    padding: 16px;
-    width: 100%;
-    height: ${RFValue(58)}px;
-    margin-bottom: ${RFValue(12)}px;
-`;
-
 export const ForgotPassword = styled.View`
     align-items: flex-end;
 `;
@@ -81,8 +58,3 @@ export const SendText = styled.Text`
     font-size: ${RFValue(16)}px;
 `;
 
-export const LoadContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
