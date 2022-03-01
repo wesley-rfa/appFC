@@ -2,6 +2,9 @@ import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 interface FilterProps {
   isActive: boolean;
@@ -13,9 +16,9 @@ export const Container = styled(GestureHandlerRootView)`
 `;
 
 export const Header = styled.View`
-  height: ${RFValue(113)}px;
+  height: ${Platform.OS == 'ios' ? RFValue(113) : RFValue(90)}px;
   background: ${({ theme }) => theme.colors.primary};
-  padding: ${RFValue(50)}px 24px 0px 24px;
+  padding: ${Platform.OS == 'ios' ? getStatusBarHeight() + 25 : 20}px 24px 0px 24px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
@@ -64,11 +67,17 @@ export const Separator = styled.View`
   background: ${({ theme }) => theme.colors.text};
 `;
 
-export const PickerContainer = styled.View`
-  flex: 1;
-  padding: ${RFValue(24)}px;
+export const PickerContainer = styled(Picker)`
+  width: 100%;
+  height: ${Platform.OS == 'ios' ? RFValue(160) : RFValue(30)}px;
+  margin: ${Platform.OS == 'ios' ? 0 : RFValue(24)}px 0px;
+  margin-bottom: ${Platform.OS == 'ios' ? RFValue(24) : RFValue(24)}px;
 `;
 export const Form = styled.ScrollView`
-  flex: 1;
+  padding: 0px ${RFValue(24)}px;
+`;
 
+export const Footer = styled.View`
+  padding: 0px ${RFValue(24)}px;
+  margin-bottom: ${getBottomSpace() + RFValue(24)}px;
 `;

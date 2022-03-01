@@ -8,7 +8,8 @@ import {
   HeaderText, DeleteLabel,
   OptionsList, PickerContainer,
   OptionSelect, Form,
-  OptionName, Separator
+  OptionName, Separator,
+  Footer
 } from './styles';
 
 import LoadingContainer from '../../components/LoadingContainer';
@@ -16,6 +17,7 @@ import { filtersSelectOptions } from '../../utils/filterSelectOptions';
 import InputText from '../../components/Form/InputText';
 import InputMask from '../../components/Form/InputMask';
 import { ageGroupOptions } from '../../utils/ageGroupOptions';
+import PrimaryButton from '../../components/PrimaryButton';
 
 interface Filter {
   key: string;
@@ -99,22 +101,19 @@ export default function FilterSelect({
               <IconBack name="chevron-left" />
             </ButtonBack>
             <HeaderText>Selecione um Filtro</HeaderText>
-            <TouchableOpacity onPress={closeFilterSelectWithFilter}>
-              <DeleteLabel>Filtrar</DeleteLabel>
+            <TouchableOpacity >
+              <DeleteLabel></DeleteLabel>
             </TouchableOpacity>
           </Header>
 
-          <PickerContainer>
-            <Picker
-              style={{ width: "100%", height: 50 }}
-              selectedValue={selectedValue}
-              onValueChange={(itemValue) => handlePicker(itemValue)}
-            >
-              {filtersSelectOptions.map((item) =>
-                <Picker.Item label={item.option} value={item.key} key={item.key} />
-              )}
+          <PickerContainer
+            selectedValue={selectedValue}
+            onValueChange={(itemValue) => handlePicker(itemValue)}
+          >
+            {filtersSelectOptions.map((item) =>
+              <Picker.Item label={item.option} value={item.key} key={item.key} />
+            )}
 
-            </Picker>
           </PickerContainer>
 
 
@@ -146,6 +145,7 @@ export default function FilterSelect({
             }
             {filter.key == '4' &&
               <Picker
+                style={{ width: "100%", height: 50 }}
                 selectedValue={statusFilter}
                 onValueChange={(itemValue) => setStatusFilter(itemValue)}
               >
@@ -173,6 +173,7 @@ export default function FilterSelect({
             }
             {filter.key == '8' &&
               <Picker
+                style={{ width: "100%", height: 50 }}
                 selectedValue={idAgeGroupFilter}
                 onValueChange={(itemValue) => setIdAgeGroupFilter(itemValue)}
               >
@@ -184,7 +185,9 @@ export default function FilterSelect({
             }
           </Form>
 
-
+          <Footer>
+            <PrimaryButton text="Filtrar" onPress={closeFilterSelectWithFilter} />
+          </Footer>
         </>
       }
     </Container>

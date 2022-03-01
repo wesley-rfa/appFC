@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { FlatList } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  height: ${RFValue(113)}px;
+  height: ${Platform.OS == 'ios' ? RFValue(113) : RFValue(90)}px;
   background: ${({ theme }) => theme.colors.primary};
   padding: 0px ${RFValue(24)}px ${RFValue(7)}px ${RFValue(24)}px;
   
@@ -19,7 +19,7 @@ export const Header = styled.View`
 `;
 
 export const UserWrapper = styled.View`
-  margin-top: ${getStatusBarHeight() + 25}px;
+  margin-top: ${Platform.OS == 'ios' ? getStatusBarHeight() + 25 : 20}px;
   flex-direction: row;
   align-items: center;
   justify-content:space-between;
