@@ -1,10 +1,11 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
 import UserRegister from '../screens/UserRegister';
-import Resume from '../screens/Resume';
+import Resume from '../../Resume';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -18,8 +19,8 @@ export function AppRoutes() {
         tabBarInactiveTintColor: theme.colors.text,
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
-          height: 80,
-          paddingVertical: 12
+          height: Platform.OS == 'ios' ? 80 : 60,
+          paddingVertical: Platform.OS == 'ios' ? 12 : 0
         }
       }}
     >

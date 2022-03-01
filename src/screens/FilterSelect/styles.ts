@@ -49,7 +49,6 @@ export const OptionSelect = styled.TouchableOpacity<FilterProps>`
   width: 100%;
   padding: ${RFValue(10)}px ${RFValue(15)}px;
   flex-direction: row;
-  align-items: center;
   background: ${({ theme, isActive }) => isActive ? theme.colors.primary_light : theme.colors.shape};
 `;
 
@@ -65,7 +64,11 @@ export const Separator = styled.View`
   background: ${({ theme }) => theme.colors.text};
 `;
 
+export const PickerContainer = styled.View`
+  flex: 1;
+  padding: ${RFValue(24)}px;
+`;
 export const Form = styled.ScrollView`
   flex: 1;
-  
+
 `;

@@ -1,4 +1,5 @@
 export const filtersSelectOptions = [
+  { key: '0', option: 'Todos os Ativos' },
   { key: '1', option: 'Contêm no Nome' },
   { key: '2', option: 'Por CPF' },
   { key: '3', option: 'Login' },

@@ -7,6 +7,14 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.wesleyribeiro.appfc",
+      "versionCode": 1
+    },
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#DA0812"
+    }
   }
 }

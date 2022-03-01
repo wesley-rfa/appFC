@@ -30,7 +30,7 @@ export default function Home() {
   const [cpfFilter, setCpfFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('ATIVO');
   const [dateBeginFilter, setDateBeginFilter] = useState('');
-  const [dateEndFilter, setDateEndFilter] = useState('ATIVO');
+  const [dateEndFilter, setDateEndFilter] = useState('');
   const [idAgeGroupFilter, setIdAgeGroupFilter] = useState('1');
 
   const [filterModalOpen, setFilterModalOpen] = useState(false);
@@ -46,7 +46,7 @@ export default function Home() {
   async function loadUsers() {
     const objFilter = {
       name: nameFilter,
-      cpf: cpfFilter,
+      cpf: cpfFilter.replace(/-/g, "").replace(/\./g, ""),
       login: loginFilter,
       status: statusFilter,
       dateBegin: dateBeginFilter,
@@ -54,6 +54,7 @@ export default function Home() {
       idAgeGroup: idAgeGroupFilter,
       keyFilter: filter.key,
     }
+    console.log(objFilter)
     setIsLoading(true)
     api.post('', {
       getUsersList: true,
@@ -122,7 +123,7 @@ export default function Home() {
   }
   function handleCloseFilterSelectFilter() {
     setFilterModalOpen(false)
-
+    loadUsers()
   }
 
   return (

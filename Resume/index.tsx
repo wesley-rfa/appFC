@@ -7,10 +7,10 @@ import {
   Container, Content,
   ChartContainer
 } from './styles';
-import HeaderScreen from '../../components/HeaderScreen';
-import AgeGroupCard from '../../components/AgeGroupCard';
-import { api } from '../../services/api';
-import LoadingContainer from '../../components/LoadingContainer';
+import HeaderScreen from '../src/components/HeaderScreen';
+import AgeGroupCard from '../src/components/AgeGroupCard';
+import { api } from '../src/services/api';
+import LoadingContainer from '../src/components/LoadingContainer';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface AgeGroupProps {

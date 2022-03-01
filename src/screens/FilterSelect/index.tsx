@@ -6,7 +6,7 @@ import {
   Container, Header,
   ButtonBack, IconBack,
   HeaderText, DeleteLabel,
-  OptionsList,
+  OptionsList, PickerContainer,
   OptionSelect, Form,
   OptionName, Separator
 } from './styles';
@@ -100,20 +100,23 @@ export default function FilterSelect({
             </ButtonBack>
             <HeaderText>Selecione um Filtro</HeaderText>
             <TouchableOpacity onPress={closeFilterSelectWithFilter}>
-              {filter.key !== '0' && <DeleteLabel>Filtrar</DeleteLabel>}
+              <DeleteLabel>Filtrar</DeleteLabel>
             </TouchableOpacity>
           </Header>
 
+          <PickerContainer>
+            <Picker
+              style={{ width: "100%", height: 50 }}
+              selectedValue={selectedValue}
+              onValueChange={(itemValue) => handlePicker(itemValue)}
+            >
+              {filtersSelectOptions.map((item) =>
+                <Picker.Item label={item.option} value={item.key} key={item.key} />
+              )}
 
-          <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue) => handlePicker(itemValue)}
-          >
-            {filtersSelectOptions.map((item) =>
-              <Picker.Item label={item.option} value={item.key} key={item.key} />
-            )}
+            </Picker>
+          </PickerContainer>
 
-          </Picker>
 
           <Form>
 
