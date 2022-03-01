@@ -8,15 +8,16 @@ import {
   TextRegister, Body,
   Form
 } from './styles';
+
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
 import InputMask from '../../components/Form/InputMask';
 import InputText from '../../components/Form/InputText';
+import LoadingContainer from '../../components/LoadingContainer';
+
 import { api } from '../../services/api';
 import { formatDate } from '../../utils/mask';
 import { ValidaCPF } from '../../utils/validaCPF';
-import LoadingContainer from '../../components/LoadingContainer';
-
 interface newUser {
   name: string;
   login: string;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, ActivityIndicator, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StatusBar, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
@@ -42,7 +42,6 @@ export default function ForgotPassword() {
     }
   }
 
-
   async function handleRecoverPassword() {
     const cpf = new ValidaCPF(userCPF);
     if (verifyInputs()) {
@@ -77,8 +76,6 @@ export default function ForgotPassword() {
       }
 
     }
-
-
 
   }
 

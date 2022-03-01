@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from 'styled-components'
 
 import FcLogo from '../../assets/logoFerreiraCosta.svg';
 import PrimaryButton from '../../components/PrimaryButton';

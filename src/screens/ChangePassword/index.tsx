@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import HeaderScreen from '../../components/HeaderScreen';
 import PrimaryButton from '../../components/PrimaryButton';
-
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useTheme } from 'styled-components';
 
 import {
   Container, ChangeArea,
   ChangeTitle, ChangeText
 } from './styles';
+
 import { api } from '../../services/api';
 import LoadingContainer from '../../components/LoadingContainer';
 import InputText from '../../components/Form/InputText';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface Params {
   userId: number,

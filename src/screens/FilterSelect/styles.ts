@@ -44,29 +44,6 @@ export const DeleteLabel = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const OptionsList = styled.FlatList`
-  flex:1;
-`;
-
-export const OptionSelect = styled.TouchableOpacity<FilterProps>`
-  width: 100%;
-  padding: ${RFValue(10)}px ${RFValue(15)}px;
-  flex-direction: row;
-  background: ${({ theme, isActive }) => isActive ? theme.colors.primary_light : theme.colors.shape};
-`;
-
-export const OptionName = styled.Text<FilterProps>`
-  font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(14)}px;
-  color: ${({ theme, isActive }) => isActive ? theme.colors.shape : theme.colors.title};
-`;
-
-export const Separator = styled.View`
-  height: 1px;
-  width: 100%;
-  background: ${({ theme }) => theme.colors.text};
-`;
-
 export const PickerContainer = styled(Picker)`
   width: 100%;
   height: ${Platform.OS == 'ios' ? RFValue(160) : RFValue(30)}px;

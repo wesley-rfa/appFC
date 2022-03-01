@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { Container, SuccessArea, SuccessIcon, SuccessTitle, SuccessText, BackLoginButton, ButtonText } from './styles';
+import {
+  Container, SuccessArea,
+  SuccessIcon, SuccessTitle,
+  SuccessText, BackLoginButton,
+  ButtonText
+} from './styles';
 
 interface Params {
   userName: string,

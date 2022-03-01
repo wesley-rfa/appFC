@@ -5,9 +5,6 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 
-
-
-
 import {
   Container, Header,
   HeaderText, ButtonBack,
@@ -17,14 +14,17 @@ import {
 } from './styles';
 
 import { api } from '../../services/api';
+
 import LoadingContainer from '../../components/LoadingContainer';
 import InputText from '../../components/Form/InputText';
 import InputMask from '../../components/Form/InputMask';
 import PrimaryButton from '../../components/PrimaryButton';
-import { useNavigation, soute, useRoute } from '@react-navigation/native';
 import { UserCardProps } from '../../components/UserCard';
-import { formatDate } from '../../utils/mask';
+
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAuth } from '../../hooks/auth';
+
+import { formatDate } from '../../utils/mask';
 import { ValidaCPF } from '../../utils/validaCPF';
 
 interface setUser {
@@ -72,7 +72,6 @@ export default function ChangeUser() {
     }
 
   }
-
 
   function handleChangeUser() {
     const cpfValidation = new ValidaCPF(cpf);

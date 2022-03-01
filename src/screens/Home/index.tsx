@@ -20,6 +20,7 @@ import { formatDate, maskCPF, maskPhoneNumber } from '../../utils/mask';
 import PrimaryButton from '../../components/PrimaryButton';
 import LoadingContainer from '../../components/LoadingContainer';
 import FilterSelect from '../FilterSelect';
+import { ValidaCPF } from '../../utils/validaCPF';
 
 
 export default function Home() {
@@ -53,6 +54,14 @@ export default function Home() {
       dateEnd: formatDate(dateEndFilter),
       idAgeGroup: idAgeGroupFilter,
       keyFilter: filter.key,
+    }
+
+    if (filter.key == '2') {
+      const cpfValidation = new ValidaCPF(cpfFilter);
+      if (!cpfValidation.valida()) {
+        Alert.alert('CPF inválido.')
+        return
+      }
     }
     setIsLoading(true)
     api.post('', {

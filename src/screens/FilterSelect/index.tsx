@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, StatusBar, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StatusBar, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import {
   Container, Header,
   ButtonBack, IconBack,
   HeaderText, DeleteLabel,
-  OptionsList, PickerContainer,
-  OptionSelect, Form,
-  OptionName, Separator,
+  PickerContainer, Form,
   Footer
 } from './styles';
 
