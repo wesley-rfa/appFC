@@ -16,6 +16,7 @@ import LoadingContainer from '../../components/LoadingContainer';
 import InputMask from '../../components/Form/InputMask';
 import InputText from '../../components/Form/InputText';
 import { formatDate } from '../../utils/mask';
+import { ValidaCPF } from '../../utils/validaCPF';
 
 interface userRecoverPassWord {
   login: string,
@@ -41,33 +42,40 @@ export default function ForgotPassword() {
     }
   }
 
+
   async function handleRecoverPassword() {
+    const cpf = new ValidaCPF(userCPF);
     if (verifyInputs()) {
-      setIsLoading(true)
-      let objForgotPassword: userRecoverPassWord = {
-        login,
-        userCPF: userCPF.replace(/-/g, "").replace(/\./g, ""),
-        userDateBirth: formatDate(userDateBirth)
+      if (cpf.valida()) {
+        setIsLoading(true)
+        let objForgotPassword: userRecoverPassWord = {
+          login,
+          userCPF: userCPF.replace(/-/g, "").replace(/\./g, ""),
+          userDateBirth: formatDate(userDateBirth)
+        }
+
+        api.post('', {
+          recoverPassword: true,
+          objForgotPassword
+        })
+          .then(function (response) {
+            setIsLoading(false)
+            if (response.data) {
+              navigation.navigate('ChangePassword', { userId: response.data.id, userName: response.data.name })
+            } else {
+              Alert.alert('Nenhum usuário encontrado.')
+            }
+
+          })
+          .catch(function (error) {
+            setIsLoading(false)
+            console.log(error);
+            Alert.alert('Erro ao buscar usuário. Por favor, tente novamente.')
+          });
+      } else {
+        Alert.alert('CPF inválido.')
       }
 
-      api.post('', {
-        recoverPassword: true,
-        objForgotPassword
-      })
-        .then(function (response) {
-          setIsLoading(false)
-          if (response.data) {
-            navigation.navigate('ChangePassword', { userId: response.data.id, userName: response.data.name })
-          } else {
-            Alert.alert('Nenhum usuário encontrado.')
-          }
-
-        })
-        .catch(function (error) {
-          setIsLoading(false)
-          console.log(error);
-          Alert.alert('Erro ao buscar usuário. Por favor, tente novamente.')
-        });
     }
 
 

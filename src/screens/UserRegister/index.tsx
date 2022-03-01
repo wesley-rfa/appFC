@@ -14,6 +14,7 @@ import InputMask from '../../components/Form/InputMask';
 import InputText from '../../components/Form/InputText';
 import { api } from '../../services/api';
 import { formatDate } from '../../utils/mask';
+import { ValidaCPF } from '../../utils/validaCPF';
 import LoadingContainer from '../../components/LoadingContainer';
 
 interface newUser {
@@ -71,20 +72,25 @@ export default function UserRegister() {
   }
 
   function handleRegisterNewUser() {
+    const cpfValidation = new ValidaCPF(cpf);
     if (verifyEmptyInputs()) {
-      setIsLoading(true)
-      if (verifyInputs() && verifySamePassword()) {
-        const newUser = {
-          name,
-          login,
-          password,
-          email,
-          motherName,
-          cpf: cpf.replace(/-/g, "").replace(/\./g, ""),
-          phoneNumber: phoneNumber.replace(/\D/g, ""),
-          dateBirth: formatDate(date)
+      if (cpfValidation.valida()) {
+        setIsLoading(true)
+        if (verifyInputs() && verifySamePassword()) {
+          const newUser = {
+            name,
+            login,
+            password,
+            email,
+            motherName,
+            cpf: cpf.replace(/-/g, "").replace(/\./g, ""),
+            phoneNumber: phoneNumber.replace(/\D/g, ""),
+            dateBirth: formatDate(date)
+          }
+          registerNewUser(newUser)
         }
-        registerNewUser(newUser)
+      } else {
+        Alert.alert('CPF inválido.')
       }
     } else {
       Alert.alert('Por favor, preencha todos os campos.')

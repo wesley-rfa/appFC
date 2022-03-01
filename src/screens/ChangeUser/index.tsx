@@ -25,6 +25,7 @@ import { useNavigation, soute, useRoute } from '@react-navigation/native';
 import { UserCardProps } from '../../components/UserCard';
 import { formatDate } from '../../utils/mask';
 import { useAuth } from '../../hooks/auth';
+import { ValidaCPF } from '../../utils/validaCPF';
 
 interface setUser {
   id: string;
@@ -74,20 +75,25 @@ export default function ChangeUser() {
 
 
   function handleChangeUser() {
+    const cpfValidation = new ValidaCPF(cpf);
     if (verifyEmptyInputs()) {
-      setIsLoading(true)
-      if (verifyInputs()) {
-        const objUser = {
-          id: userRoute.id,
-          name,
-          login,
-          email,
-          motherName,
-          cpf: cpf.replace(/-/g, "").replace(/\./g, ""),
-          phoneNumber: phoneNumber.replace(/\D/g, ""),
-          dateBirth: formatDate(date)
+      if (cpfValidation.valida()) {
+        setIsLoading(true)
+        if (verifyInputs()) {
+          const objUser = {
+            id: userRoute.id,
+            name,
+            login,
+            email,
+            motherName,
+            cpf: cpf.replace(/-/g, "").replace(/\./g, ""),
+            phoneNumber: phoneNumber.replace(/\D/g, ""),
+            dateBirth: formatDate(date)
+          }
+          setUser(objUser)
         }
-        setUser(objUser)
+      } else {
+        Alert.alert('CPF inválido.')
       }
     } else {
       Alert.alert('Por favor, preencha todos os campos.')
