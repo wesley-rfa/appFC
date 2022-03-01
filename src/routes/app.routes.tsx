@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
 import UserRegister from '../screens/UserRegister';
-import Resume from '../../Resume';
+import Resume from '../screens/Resume';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 

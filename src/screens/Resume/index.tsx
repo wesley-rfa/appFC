@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
 
 import { VictoryPie } from 'victory-native';
@@ -7,11 +7,12 @@ import {
   Container, Content,
   ChartContainer
 } from './styles';
-import HeaderScreen from '../src/components/HeaderScreen';
-import AgeGroupCard from '../src/components/AgeGroupCard';
-import { api } from '../src/services/api';
-import LoadingContainer from '../src/components/LoadingContainer';
+import HeaderScreen from '../../components/HeaderScreen';
+import AgeGroupCard from '../../components/AgeGroupCard';
+import { api } from '../../services/api';
+import LoadingContainer from '../../components/LoadingContainer';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface AgeGroupProps {
   idAgeGroup: string;
@@ -32,9 +33,10 @@ export default function Resume() {
   const [ageGroup, setAgeGroup] = useState<AgeGroupProps[]>([])
   const [objChart, setObjChart] = useState<objChart[]>([])
 
-  const obj: objChart[] = []
 
   async function loadResume() {
+    const obj: objChart[] = [];
+    setIsLoading(true)
     api.post('', {
       resumeAgeGroup: true
     })
@@ -67,6 +69,10 @@ export default function Resume() {
   useEffect(() => {
     loadResume()
   }, [])
+
+  useFocusEffect(useCallback(() => {
+    loadResume()
+  }, []));
 
   return (
     <Container>

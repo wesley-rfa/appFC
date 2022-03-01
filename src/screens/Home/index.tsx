@@ -16,7 +16,7 @@ import {
 import { useAuth } from '../../hooks/auth';
 import UserCard, { UserCardProps } from '../../components/UserCard';
 import { api } from '../../services/api';
-import { maskCPF, maskPhoneNumber } from '../../utils/mask';
+import { formatDate, maskCPF, maskPhoneNumber } from '../../utils/mask';
 import PrimaryButton from '../../components/PrimaryButton';
 import LoadingContainer from '../../components/LoadingContainer';
 import FilterSelect from '../FilterSelect';
@@ -49,12 +49,11 @@ export default function Home() {
       cpf: cpfFilter.replace(/-/g, "").replace(/\./g, ""),
       login: loginFilter,
       status: statusFilter,
-      dateBegin: dateBeginFilter,
-      dateEnd: dateEndFilter,
+      dateBegin: formatDate(dateBeginFilter),
+      dateEnd: formatDate(dateEndFilter),
       idAgeGroup: idAgeGroupFilter,
       keyFilter: filter.key,
     }
-    console.log(objFilter)
     setIsLoading(true)
     api.post('', {
       getUsersList: true,

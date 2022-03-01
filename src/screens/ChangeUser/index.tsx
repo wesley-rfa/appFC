@@ -21,9 +21,10 @@ import LoadingContainer from '../../components/LoadingContainer';
 import InputText from '../../components/Form/InputText';
 import InputMask from '../../components/Form/InputMask';
 import PrimaryButton from '../../components/PrimaryButton';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, soute, useRoute } from '@react-navigation/native';
 import { UserCardProps } from '../../components/UserCard';
 import { formatDate } from '../../utils/mask';
+import { useAuth } from '../../hooks/auth';
 
 interface setUser {
   id: string;
@@ -49,7 +50,8 @@ export default function ChangeUser() {
 
   const navigation = useNavigation<any>();
   const route = useRoute();
-  const user = route.params as UserCardProps;
+  const { user } = useAuth()
+  const userRoute = route.params as UserCardProps;
 
   function verifyEmptyInputs() {
     if (name == '' || login == '' || email == '' || phoneNumber == ''
@@ -76,7 +78,7 @@ export default function ChangeUser() {
       setIsLoading(true)
       if (verifyInputs()) {
         const objUser = {
-          id: user.id,
+          id: userRoute.id,
           name,
           login,
           email,
@@ -96,7 +98,7 @@ export default function ChangeUser() {
     setIsLoading(true)
     api.post('', {
       cancelUser: true,
-      id: user.id
+      id: userRoute.id
     })
       .then(function (response) {
         setIsLoading(false)
@@ -115,15 +117,18 @@ export default function ChangeUser() {
 
   }
 
-  async function setUser(user: setUser) {
+  async function setUser(userChange: setUser) {
+    console.log(userRoute)
     api.post('', {
       setUser: true,
-      user
+      user: userChange
     })
       .then(function (response) {
         setIsLoading(false)
         console.log(response.data)
-        if (response.data) {
+        if (response.data == -1) {
+          Alert.alert('Login já existe.')
+        } else if (response.data == 1) {
           navigation.navigate('Início')
         } else {
           Alert.alert('Erro ao tentar alterar usuário.')
@@ -137,13 +142,13 @@ export default function ChangeUser() {
   }
 
   useEffect(() => {
-    setName(user.name)
-    setLogin(user.login)
-    setEmail(user.email)
-    setPhoneNumber(user.phoneNumber)
-    setCpf(user.cpf)
-    setDate(user.birth)
-    setMotherName(user.motherName)
+    setName(userRoute.name)
+    setLogin(userRoute.login)
+    setEmail(userRoute.email)
+    setPhoneNumber(userRoute.phoneNumber)
+    setCpf(userRoute.cpf)
+    setDate(userRoute.birth)
+    setMotherName(userRoute.motherName)
   }, [])
 
   function goBack() {
@@ -163,7 +168,7 @@ export default function ChangeUser() {
               </ButtonBack>
               <HeaderText>Alterar Usuário</HeaderText>
               <TouchableOpacity onPress={handleCancelUser}>
-                <DeleteLabel>Excluir</DeleteLabel>
+                <DeleteLabel>{userRoute.status == 'ATIVO' && parseInt(userRoute.id) != user.id ? 'Excluir' : ''}</DeleteLabel>
               </TouchableOpacity>
             </Header>
 
@@ -211,7 +216,7 @@ export default function ChangeUser() {
                   onChangeText={setMotherName}
                 />
               </Form>
-              <PrimaryButton text="Alterar" onPress={handleChangeUser} />
+              {userRoute.status == 'ATIVO' ? <PrimaryButton text="Alterar" onPress={handleChangeUser} /> : <></>}
             </Body>
 
           </>
