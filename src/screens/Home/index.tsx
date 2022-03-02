@@ -109,7 +109,8 @@ export default function Home() {
     setIsLoading(true)
     api.post('', {
       cancelAllUsers: true,
-      users
+      users,
+      idUserLogged: user.id
     })
       .then(function (response) {
         if (response.data) {
